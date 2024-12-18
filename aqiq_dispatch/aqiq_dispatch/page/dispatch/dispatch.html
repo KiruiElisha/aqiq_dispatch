@@ -1,0 +1,70 @@
+<div class="dispatch-container">
+    <!-- Statistics Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="stats-card">
+            <div>
+                <div class="stats-number" id="total-dispatches">0</div>
+                <div class="stats-label">Total Deliveries</div>
+            </div>
+            <div class="text-blue-500">
+                <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                </svg>
+            </div>
+        </div>
+
+        <div class="stats-card">
+            <div>
+                <div class="stats-number text-yellow-600" id="pending-dispatches">0</div>
+                <div class="stats-label">Pending</div>
+            </div>
+            <div class="text-yellow-500">
+                <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+            </div>
+        </div>
+
+        <div class="stats-card">
+            <div>
+                <div class="stats-number text-green-600" id="completed-dispatches">0</div>
+                <div class="stats-label">Dispatched</div>
+            </div>
+            <div class="text-green-500">
+                <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scan Section -->
+    <div class="scan-section">
+        <div class="max-w-md mx-auto">
+            <div id="dispatch-status"></div>
+            
+            <button id="scan-button" class="scan-button">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/>
+                </svg>
+                Scan QR Code
+            </button>
+
+            <div class="manual-input">
+                <form id="manual-entry-form">
+                    <input type="text" 
+                        id="delivery-note-input" 
+                        class="input-field"
+                        placeholder="Or enter Delivery Note ID manually"
+                    >
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- History Section -->
+    <div class="history-section">
+        <h3 class="text-lg font-medium text-gray-900 mb-4">Recent Dispatches</h3>
+        <div class="dispatch-history-table"></div>
+    </div>
+</div> 

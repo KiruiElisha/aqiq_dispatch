@@ -4,226 +4,73 @@ app_publisher = "elisha@aqiqsolutions.com"
 app_description = "Updates delivery Note with Status"
 app_email = "elisha@aqiqsolutions.com"
 app_license = "mit"
-# required_apps = []
 
-# Includes in <head>
-# ------------------
+# Fixtures
+fixtures = [
+    {
+        "doctype": "Custom Field",
+        "filters": [
+            [
+                "name",
+                "in",
+                [
+                    "Delivery Note-custom_dispatch_status",
+                    "Delivery Note-custom_dispatch_time",
+                    "Delivery Note-custom_dispatched_by",
+                ]
+            ]
+        ]
+    },
+    {
+        "doctype": "Property Setter",
+        "filters": [
+            [
+                "doc_type",
+                "=",
+                "Delivery Note"
+            ]
+        ]
+    }
+]
 
-# include js, css files in header of desk.html
-# app_include_css = "/assets/aqiq_dispatch/css/aqiq_dispatch.css"
-# app_include_js = "/assets/aqiq_dispatch/js/aqiq_dispatch.js"
+# Custom fields to be created
+custom_fields = {
+    "Delivery Note": [
+        {
+            "fieldname": "custom_dispatch_status",
+            "fieldtype": "Select",
+            "label": "Dispatch Status",
+            "options": "\nPending\nDispatched",
+            "default": "Pending",
+            "insert_after": "status",
+            "translatable": 0,
+            "bold": 1
+        },
+        {
+            "fieldname": "custom_dispatch_time",
+            "fieldtype": "Datetime",
+            "label": "Dispatch Time",
+            "insert_after": "custom_dispatch_status",
+            "read_only": 1,
+            "allow_on_submit": 1,
+            "translatable": 0
+        },
+        {
+            "fieldname": "custom_dispatched_by",
+            "fieldtype": "Link",
+            "label": "Dispatched By",
+            "options": "User",
+            "insert_after": "custom_dispatch_time",
+            "read_only": 1,
+            "allow_on_submit": 1,
+            "translatable": 0
+        }
+    ]
+}
 
-# include js, css files in header of web template
-# web_include_css = "/assets/aqiq_dispatch/css/aqiq_dispatch.css"
-# web_include_js = "/assets/aqiq_dispatch/js/aqiq_dispatch.js"
 
-# include custom scss in every website theme (without file extension ".scss")
-# website_theme_scss = "aqiq_dispatch/public/scss/website"
-
-# include js, css files in header of web form
-# webform_include_js = {"doctype": "public/js/doctype.js"}
-# webform_include_css = {"doctype": "public/css/doctype.css"}
-
-# include js in page
-# page_js = {"page" : "public/js/file.js"}
-
-# include js in doctype views
-# doctype_js = {"doctype" : "public/js/doctype.js"}
-# doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
-# doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
-# doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
-
-# Svg Icons
-# ------------------
-# include app icons in desk
-# app_include_icons = "aqiq_dispatch/public/icons.svg"
-
-# Home Pages
-# ----------
-
-# application home page (will override Website Settings)
-# home_page = "login"
-
-# website user home page (by Role)
-# role_home_page = {
-# 	"Role": "home_page"
-# }
-
-# Generators
-# ----------
-
-# automatically create page for each record of this doctype
-# website_generators = ["Web Page"]
-
-# Jinja
-# ----------
-
-# add methods and filters to jinja environment
-# jinja = {
-# 	"methods": "aqiq_dispatch.utils.jinja_methods",
-# 	"filters": "aqiq_dispatch.utils.jinja_filters"
-# }
-
-# Installation
-# ------------
-
-# before_install = "aqiq_dispatch.install.before_install"
-# after_install = "aqiq_dispatch.install.after_install"
-
-# Uninstallation
-# ------------
-
-# before_uninstall = "aqiq_dispatch.uninstall.before_uninstall"
-# after_uninstall = "aqiq_dispatch.uninstall.after_uninstall"
-
-# Integration Setup
-# ------------------
-# To set up dependencies/integrations with other apps
-# Name of the app being installed is passed as an argument
-
-# before_app_install = "aqiq_dispatch.utils.before_app_install"
-# after_app_install = "aqiq_dispatch.utils.after_app_install"
-
-# Integration Cleanup
-# -------------------
-# To clean up dependencies/integrations with other apps
-# Name of the app being uninstalled is passed as an argument
-
-# before_app_uninstall = "aqiq_dispatch.utils.before_app_uninstall"
-# after_app_uninstall = "aqiq_dispatch.utils.after_app_uninstall"
-
-# Desk Notifications
-# ------------------
-# See frappe.core.notifications.get_notification_config
-
-# notification_config = "aqiq_dispatch.notifications.get_notification_config"
-
-# Permissions
-# -----------
-# Permissions evaluated in scripted ways
-
-# permission_query_conditions = {
-# 	"Event": "frappe.desk.doctype.event.event.get_permission_query_conditions",
-# }
-#
-# has_permission = {
-# 	"Event": "frappe.desk.doctype.event.event.has_permission",
-# }
-
-# DocType Class
-# ---------------
-# Override standard doctype classes
-
-# override_doctype_class = {
-# 	"ToDo": "custom_app.overrides.CustomToDo"
-# }
-
-# Document Events
-# ---------------
-# Hook on document methods and events
-
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-# 	}
-# }
-
-# Scheduled Tasks
-# ---------------
-
-# scheduler_events = {
-# 	"all": [
-# 		"aqiq_dispatch.tasks.all"
-# 	],
-# 	"daily": [
-# 		"aqiq_dispatch.tasks.daily"
-# 	],
-# 	"hourly": [
-# 		"aqiq_dispatch.tasks.hourly"
-# 	],
-# 	"weekly": [
-# 		"aqiq_dispatch.tasks.weekly"
-# 	],
-# 	"monthly": [
-# 		"aqiq_dispatch.tasks.monthly"
-# 	],
-# }
-
-# Testing
-# -------
-
-# before_tests = "aqiq_dispatch.install.before_tests"
-
-# Overriding Methods
-# ------------------------------
-#
-# override_whitelisted_methods = {
-# 	"frappe.desk.doctype.event.event.get_events": "aqiq_dispatch.event.get_events"
-# }
-#
-# each overriding function accepts a `data` argument;
-# generated from the base implementation of the doctype dashboard,
-# along with any modifications made in other Frappe apps
-# override_doctype_dashboards = {
-# 	"Task": "aqiq_dispatch.task.get_dashboard_data"
-# }
-
-# exempt linked doctypes from being automatically cancelled
-#
-# auto_cancel_exempted_doctypes = ["Auto Repeat"]
-
-# Ignore links to specified DocTypes when deleting documents
-# -----------------------------------------------------------
-
-# ignore_links_on_delete = ["Communication", "ToDo"]
-
-# Request Events
-# ----------------
-# before_request = ["aqiq_dispatch.utils.before_request"]
-# after_request = ["aqiq_dispatch.utils.after_request"]
-
-# Job Events
-# ----------
-# before_job = ["aqiq_dispatch.utils.before_job"]
-# after_job = ["aqiq_dispatch.utils.after_job"]
-
-# User Data Protection
-# --------------------
-
-# user_data_fields = [
-# 	{
-# 		"doctype": "{doctype_1}",
-# 		"filter_by": "{filter_by}",
-# 		"redact_fields": ["{field_1}", "{field_2}"],
-# 		"partial": 1,
-# 	},
-# 	{
-# 		"doctype": "{doctype_2}",
-# 		"filter_by": "{filter_by}",
-# 		"partial": 1,
-# 	},
-# 	{
-# 		"doctype": "{doctype_3}",
-# 		"strict": False,
-# 	},
-# 	{
-# 		"doctype": "{doctype_4}"
-# 	}
-# ]
-
-# Authentication and authorization
-# --------------------------------
-
-# auth_hooks = [
-# 	"aqiq_dispatch.auth.validate"
-# ]
-
-# Automatically update python controller files with type annotations for this app.
-# export_python_type_annotations = True
-
-# default_log_clearing_doctypes = {
-# 	"Logging DocType Name": 30  # days to retain logs
-# }
+# Permissions for roles
+has_permission = {
+    "Delivery Note": "aqiq_dispatch.aqiq_dispatch.doctype.delivery_note.has_permission"
+}
 

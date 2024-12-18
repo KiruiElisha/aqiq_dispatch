@@ -1,0 +1,23 @@
+{
+ "content": null,
+ "creation": "2024-12-18 12:03:53.112328",
+ "docstatus": 0,
+ "doctype": "Page",
+ "idx": 0,
+ "modified": "2024-12-18 12:03:53.112328",
+ "modified_by": "Administrator",
+ "module": "AQIQ Dispatch",
+ "name": "dispatch",
+ "owner": "Administrator",
+ "page_name": "dispatch",
+ "roles": [
+  {
+   "role": "Dispatch inchage"
+  }
+ ],
+ "script": null,
+ "standard": "Yes",
+ "style": null,
+ "system_page": 0,
+ "title": "Dispatch"
+}

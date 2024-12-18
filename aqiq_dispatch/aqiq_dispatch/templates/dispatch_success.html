@@ -1,0 +1,64 @@
+{% extends "templates/web.html" %}
+
+{% block page_content %}
+<div class="dispatch-success-container">
+    <div class="success-icon">
+        <i class="fa fa-check-circle text-success" style="font-size: 48px;"></i>
+    </div>
+    <h2 class="success-title">{{ _("Successfully Dispatched!") }}</h2>
+    <div class="success-message">
+        {{ message }}
+    </div>
+    <div class="dispatch-details">
+        <div class="detail-item">
+            <span class="label">{{ _("Delivery Note") }}:</span>
+            <span class="value">{{ delivery_note }}</span>
+        </div>
+        <div class="detail-item">
+            <span class="label">{{ _("Time") }}:</span>
+            <span class="value">{{ frappe.utils.now_datetime()|format_datetime }}</span>
+        </div>
+    </div>
+</div>
+
+<style>
+.dispatch-success-container {
+    max-width: 500px;
+    margin: 2rem auto;
+    text-align: center;
+    padding: 2rem;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.success-icon {
+    margin-bottom: 1rem;
+}
+
+.success-title {
+    color: var(--text-color);
+    margin-bottom: 1rem;
+}
+
+.success-message {
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+}
+
+.dispatch-details {
+    text-align: left;
+    border-top: 1px solid var(--border-color);
+    padding-top: 1rem;
+}
+
+.detail-item {
+    margin: 0.5rem 0;
+}
+
+.detail-item .label {
+    font-weight: 500;
+    margin-right: 0.5rem;
+}
+</style>
+{% endblock %} 
