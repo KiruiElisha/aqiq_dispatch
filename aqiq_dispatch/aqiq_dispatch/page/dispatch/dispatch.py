@@ -24,20 +24,29 @@ def update_dispatch_status(delivery_note):
                 )
             }
 
-        # Update dispatch status
-        doc.custom_dispatch_status = "Dispatched"
-        doc.custom_dispatch_time = frappe.utils.now()
-        doc.custom_dispatched_by = frappe.session.user
-        doc.save(ignore_permissions=True)
+        # Update dispatch status without modifying the document
+        frappe.db.set_value(
+            "Delivery Note", 
+            delivery_note,
+            {
+                "custom_dispatch_status": "Dispatched",
+                "custom_dispatch_time": frappe.utils.now(),
+                "custom_dispatched_by": frappe.session.user
+            },
+            update_modified=False
+        )
         
         frappe.db.commit()
+
+        # Get updated values for response
+        updated_doc = frappe.get_doc("Delivery Note", delivery_note)
         
         return {
             'success': True,
-            'delivery_note': doc.name,
-            'status': doc.custom_dispatch_status,
-            'dispatch_time': frappe.utils.format_datetime(doc.custom_dispatch_time, "medium"),
-            'dispatched_by': doc.custom_dispatched_by,
+            'delivery_note': updated_doc.name,
+            'status': updated_doc.custom_dispatch_status,
+            'dispatch_time': frappe.utils.format_datetime(updated_doc.custom_dispatch_time, "medium"),
+            'dispatched_by': updated_doc.custom_dispatched_by,
             'message': _("Delivery Note dispatched successfully")
         }
             
