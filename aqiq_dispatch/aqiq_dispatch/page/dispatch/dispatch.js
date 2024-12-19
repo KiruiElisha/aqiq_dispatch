@@ -74,15 +74,98 @@ class DispatchManager {
 	}
 
 	async show_scanner() {
-		const scanner = new frappe.ui.Scanner({
-			dialog: true,
-			multiple: false,
-			on_scan: (data) => {
-				const delivery_note = data.decodedText;
-				this.process_delivery_note(delivery_note);
-				scanner.dialog.hide();
+		frappe.require('qrcode.min.js', () => {
+			const scanner = new frappe.ui.Scanner({
+				dialog: true,
+				multiple: false,
+				constraints: {
+					video: {
+						facingMode: "environment",
+						width: { ideal: 1280 },
+						height: { ideal: 720 }
+					}
+				},
+				formats: ["qr_code", "ean_13", "ean_8", "code_128"],
+				on_scan: (data) => {
+					try {
+						let delivery_note;
+						if (typeof data === 'object' && data.hasOwnProperty('decodedText')) {
+							delivery_note = data.decodedText.trim();
+						} else if (typeof data === 'string') {
+							delivery_note = data.trim();
+						} else {
+							throw new Error("Invalid scan data format");
+						}
+						
+						if (delivery_note) {
+							this.process_delivery_note(delivery_note);
+							scanner.dialog.hide();
+						}
+					} catch (error) {
+						frappe.show_alert({
+							message: __('Error processing scanned data: {0}', [error.message]),
+							indicator: 'red'
+						});
+					}
+				},
+				on_error: (err) => {
+					console.error("Scanner Error:", err);
+					
+					let errorMessage = __('Scanner error: Please try again or use manual entry');
+					if (err.name === 'NotFoundError') {
+						errorMessage = __('No camera found. Please ensure your device has a camera and try again.');
+					} else if (err.name === 'NotAllowedError') {
+						errorMessage = __('Camera access denied. Please allow camera access and try again.');
+					} else if (err.name === 'NotReadableError') {
+						errorMessage = __('Camera is in use by another application. Please close other camera apps and try again.');
+					}
+					
+					frappe.show_alert({
+						message: errorMessage,
+						indicator: 'red'
+					});
+					
+					if (err.name === 'NotFoundError') {
+						this.show_manual_input_dialog();
+					}
+				}
+			});
+			
+			scanner.show();
+			
+			if (scanner.dialog) {
+				scanner.dialog.set_secondary_action(() => {
+					const instructions = this.get_camera_instructions();
+						frappe.msgprint({
+							title: __('Camera Access Required'),
+							message: instructions,
+							indicator: 'blue'
+						});
+				}, __('Camera Help'));
 			}
 		});
+	}
+
+	show_manual_input_dialog() {
+		const d = new frappe.ui.Dialog({
+			title: __('Enter Delivery Note'),
+			fields: [
+				{
+					label: __('Delivery Note ID'),
+					fieldname: 'delivery_note',
+					fieldtype: 'Data',
+					reqd: 1
+				}
+			],
+			primary_action_label: __('Process'),
+			primary_action: (values) => {
+				if (values.delivery_note) {
+					this.process_delivery_note(values.delivery_note);
+					d.hide();
+				}
+			}
+		});
+		d.show();
 	}
 
 	handle_scan_result(data) {

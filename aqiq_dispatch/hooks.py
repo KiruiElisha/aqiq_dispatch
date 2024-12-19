@@ -17,6 +17,7 @@ fixtures = [
                     "Delivery Note-custom_dispatch_status",
                     "Delivery Note-custom_dispatch_time",
                     "Delivery Note-custom_dispatched_by",
+                    "Quotation-custom_warehouse"
                 ]
             ]
         ]
@@ -26,8 +27,8 @@ fixtures = [
         "filters": [
             [
                 "doc_type",
-                "=",
-                "Delivery Note"
+                "in",
+                ["Delivery Note", "Quotation"]
             ]
         ]
     }
@@ -65,9 +66,23 @@ custom_fields = {
             "allow_on_submit": 1,
             "translatable": 0
         }
+    ],
+    "Quotation": [
+        {
+            "fieldname": "custom_warehouse",
+            "fieldtype": "Link",
+            "label": "Warehouse",
+            "options": "Warehouse",
+            "insert_after": "order_type",
+            "translatable": 0
+        }
     ]
 }
 
+# DocType JS
+doctype_js = {
+    "Quotation": "public/js/quotation.js"
+}
 
 # Permissions for roles
 has_permission = {
